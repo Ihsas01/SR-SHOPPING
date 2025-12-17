@@ -46,12 +46,6 @@ const Header: React.FC<HeaderProps> = ({
     { id: 'contact', label: 'Contact' },
   ];
 
-  const drawerVariants = {
-    hidden: { opacity: 0, y: -12 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.28 } },
-    exit: { opacity: 0, y: -8, transition: { duration: 0.18 } },
-  };
-
   return (
     <motion.header
       className={`sticky top-0 z-40 backdrop-blur bg-white/70 border-b border-slate-200 transition-shadow ${scrolled ? 'shadow-lg' : ''}`}
