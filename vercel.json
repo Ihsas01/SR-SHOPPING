@@ -4,6 +4,9 @@
     { "src": "package.json", "use": "@vercel/static-build", "config": { "distDir": "dist" } }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "/index.html" }
+    // Serve common static asset types directly so they keep correct MIME types
+    { "src": "^/(.*\\.(js|css|png|jpg|jpeg|svg|ico|map|json))$", "dest": "/$1" },
+    // SPA fallback for all other routes
+    { "src": "^/(.*)$", "dest": "/index.html" }
   ]
 }
