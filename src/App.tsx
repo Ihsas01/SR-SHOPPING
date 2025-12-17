@@ -841,6 +841,27 @@ const App: React.FC = () => {
             <p className="text-sm text-slate-500 mt-3">Email must be unique. Deleting the signed-in admin will log them out.</p>
           </div>
 
+          {pendingAdmins.length > 0 && (
+            <div className="bg-white border rounded-lg p-4 mb-4">
+              <h3 className="mb-3">Pending Admin Approvals</h3>
+              <div className="space-y-3">
+                {pendingAdmins.map((p) => (
+                  <div key={p.email} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-3 border rounded-md">
+                    <div>
+                      <div className="font-semibold">{p.name}</div>
+                      <div className="text-sm text-slate-500">{p.email}</div>
+                    </div>
+                    <div className="text-sm text-slate-500">{p.phone ?? '—'}</div>
+                    <div className="mt-2 sm:mt-0 flex gap-2">
+                      <button onClick={() => approvePendingAdmin(p.email)} className="px-3 py-1 rounded bg-green-50 text-green-700">Approve</button>
+                      <button onClick={() => rejectPendingAdmin(p.email)} className="px-3 py-1 rounded bg-red-50 text-red-700">Reject</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div className="card">
             <h3>Add a new product</h3>
             <form className="grid grid-cols-1 md:grid-cols-2 gap-4" onSubmit={handleAddProduct}>
