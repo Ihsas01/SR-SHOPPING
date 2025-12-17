@@ -32,66 +32,65 @@ interface FooterProps {}
 
 const Footer: React.FC<FooterProps> = () => {
   return (
-    <footer className="footer" id="contact">
-      <div className="footer-inner">
-        <div className="content-width footer-grid footer-grid--spacious">
-          <div className="footer-column">
-            <div className="footer-brand">
-              <img src={logo} alt="SR Shopping" className="footer-logo" />
+    <footer className="bg-slate-50 border-t border-slate-200 mt-12" id="contact">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="space-y-3">
+            <div className="flex items-center gap-3">
+              <img src={logo} alt="SR Shopping" className="w-14 h-14 object-contain rounded-md" />
               <div>
-                <div className="brand-title">SR SHOPPING</div>
-                <div className="brand-subtitle">Curated home & lifestyle</div>
+                <div className="font-bold">SR SHOPPING</div>
+                <div className="text-sm text-slate-500">Curated home & lifestyle</div>
               </div>
             </div>
-            <p className="muted small">A modern local shop bringing you curated home, fashion, beauty, and lifestyle essentials with friendly cash-on-delivery service.</p>
-            <div className="footer-cta" style={{ marginTop: 12 }}>
-              <a className="primary" href="https://wa.me/0763913526" target="_blank" rel="noreferrer">Chat now</a>
-              <a className="ghost" href="mailto:support@srshopping.com">Email us</a>
+            <p className="text-sm text-slate-600">A modern local shop bringing you curated home, fashion, beauty, and lifestyle essentials with friendly cash-on-delivery service.</p>
+            <div className="flex gap-2 mt-2">
+              <a className="inline-flex items-center px-3 py-2 rounded-md bg-violet-600 text-white text-sm" href="https://wa.me/0763913526" target="_blank" rel="noreferrer">Chat now</a>
+              <a className="inline-flex items-center px-3 py-2 rounded-md border text-sm" href="mailto:support@srshopping.com">Email</a>
             </div>
           </div>
 
-          <div className="footer-column">
-            <h4 style={{margin:0}}>Quick Links</h4>
-            <nav className="footer-list">
-              <a className="footer-link footer-link-item" href="#hero">Home</a>
-              <a className="footer-link footer-link-item" href="#featured">Featured</a>
-              <a className="footer-link footer-link-item" href="#about">About</a>
-              <a className="footer-link footer-link-item" href="#contact">Contact</a>
+          <div>
+            <h4 className="font-semibold mb-2">Quick Links</h4>
+            <nav className="flex flex-col gap-2 text-sm">
+              <a href="#hero" className="text-slate-700 hover:text-violet-600">Home</a>
+              <a href="#featured" className="text-slate-700 hover:text-violet-600">Featured</a>
+              <a href="#about" className="text-slate-700 hover:text-violet-600">About</a>
+              <a href="#contact" className="text-slate-700 hover:text-violet-600">Contact</a>
             </nav>
           </div>
 
-          <div className="footer-column">
-            <h4>Contact</h4>
-            <div className="footer-list">
-              <a className="footer-link" href="mailto:support@srshopping.com">support@srshopping.com</a>
-              <a className="footer-link" href="tel:0763913526">0763913526</a>
+          <div>
+            <h4 className="font-semibold mb-2">Contact</h4>
+            <div className="flex flex-col gap-2 text-sm text-slate-700">
+              <a className="hover:text-violet-600" href="mailto:support@srshopping.com">support@srshopping.com</a>
+              <a className="hover:text-violet-600" href="tel:0763913526">0763913526</a>
               <span>Colombo, Sri Lanka</span>
-              <a className="footer-link" href="https://wa.me/0763913526" target="_blank" rel="noreferrer">Chat on WhatsApp</a>
+              <a className="hover:text-violet-600" href="https://wa.me/0763913526" target="_blank" rel="noreferrer">Chat on WhatsApp</a>
             </div>
           </div>
 
-          <div className="footer-column">
-            <h4>Follow</h4>
-            <div className="social-icons" role="list">
-              <motion.a className="social-icon" href="https://wa.me/0763913526" target="_blank" rel="noreferrer" aria-label="WhatsApp" whileHover={{ y: -6, scale: 1.03 }}>
+          <div>
+            <h4 className="font-semibold mb-2">Follow & Subscribe</h4>
+            <div className="flex items-center gap-3 mb-3">
+              <motion.a href="https://wa.me/0763913526" target="_blank" rel="noreferrer" aria-label="WhatsApp" whileHover={{ y: -4 }} className="p-2 bg-white rounded-md shadow-sm">
                 <IconWhatsApp />
               </motion.a>
-              <motion.a className="social-icon" href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook" whileHover={{ y: -6, scale: 1.03 }}>
+              <motion.a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook" whileHover={{ y: -4 }} className="p-2 bg-white rounded-md shadow-sm">
                 <IconFacebook />
               </motion.a>
-              <motion.a className="social-icon" href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram" whileHover={{ y: -6, scale: 1.03 }}>
+              <motion.a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram" whileHover={{ y: -4 }} className="p-2 bg-white rounded-md shadow-sm">
                 <IconInstagram />
               </motion.a>
             </div>
-            <p className="small muted" style={{ marginTop: 12 }}>Subscribe for updates and offers.</p>
-            <form className="footer-subscribe" onSubmit={(e) => e.preventDefault()}>
-              <input className="subscribe-input" placeholder="Your email" aria-label="Subscribe email" />
-              <button className="primary" type="submit">Subscribe</button>
+            <form onSubmit={(e) => e.preventDefault()} className="flex gap-2">
+              <input aria-label="Subscribe email" placeholder="Your email" className="flex-1 px-3 py-2 border rounded-md text-sm" />
+              <button className="px-3 py-2 bg-violet-600 text-white rounded-md text-sm">Subscribe</button>
             </form>
           </div>
         </div>
 
-        <div className="content-width footer-bottom">© 2025 SR SHOPPING. All Rights Reserved.</div>
+        <div className="mt-8 text-center text-sm text-slate-500">© 2025 SR SHOPPING. All Rights Reserved.</div>
       </div>
     </footer>
   );

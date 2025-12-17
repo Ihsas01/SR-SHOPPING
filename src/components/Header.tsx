@@ -53,99 +53,92 @@ const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <motion.header className={`header-bar ${scrolled ? 'scrolled' : ''}`} aria-hidden={false}>
-      <div className="content-width header-inner">
-        <motion.div className="brand modern" onClick={() => handleNav('hero')} role="button" aria-label="Go home" whileHover={{ y: -2 }} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <img src={logo} alt="SR Shopping" className="brand-logo" />
-          <div>
-            <div className="brand-title">SR SHOPPING</div>
-            <div className="brand-subtitle">Modern home & lifestyle</div>
+    <motion.header
+      className={`sticky top-0 z-40 backdrop-blur bg-white/70 border-b border-slate-200 transition-shadow ${scrolled ? 'shadow-lg' : ''}`}
+      aria-hidden={false}
+    >
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex items-center gap-3">
+            <button onClick={() => handleNav('hero')} className="flex items-center gap-3" aria-label="Go home">
+              <img src={logo} alt="SR Shopping" className="w-10 h-10 rounded-md object-contain" />
+              <div className="hidden sm:block text-left">
+                <div className="font-bold text-sm">SR SHOPPING</div>
+                <div className="text-xs text-slate-500">Modern home & lifestyle</div>
+              </div>
+            </button>
           </div>
-        </motion.div>
 
-        <nav className="nav-links desktop" aria-label="Primary navigation">
-          {navItems.map((it) => (
+          <nav className="hidden md:flex items-center gap-1">
+            {navItems.map((it) => (
+              <motion.button
+                key={it.id}
+                onClick={() => handleNav(it.id)}
+                className={`px-3 py-2 rounded-lg text-sm font-medium ${active === it.id ? 'bg-violet-50 text-violet-700' : 'text-slate-700 hover:bg-slate-100'}`}
+                whileHover={{ scale: 1.02 }}
+              >
+                {it.label}
+              </motion.button>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-3">
+            <div className="hidden sm:flex items-center bg-white border border-slate-200 rounded-full px-3 py-1 shadow-sm">
+              <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35"/></svg>
+              <input
+                aria-label="Search products"
+                className="ml-2 outline-none text-sm text-slate-600 placeholder:text-slate-400 bg-transparent"
+                placeholder="Search products..."
+                value={search}
+                onChange={(e) => onSearchChange(e.target.value)}
+              />
+            </div>
+
+            {isAuthed ? (
+              <>
+                <motion.button onClick={onDashboard} className="hidden sm:inline-flex items-center px-3 py-2 rounded-md bg-slate-100 text-sm font-semibold text-slate-800" whileHover={{ y: -2 }}>
+                  Dashboard
+                </motion.button>
+                <motion.button onClick={onLogout} className="inline-flex items-center px-3 py-2 rounded-md text-sm font-medium text-slate-700 hover:bg-slate-50" whileHover={{ y: -2 }}>
+                  Logout
+                </motion.button>
+              </>
+            ) : (
+              <motion.button onClick={onAdmin} className="inline-flex items-center px-3 py-2 rounded-md bg-gradient-to-r from-violet-600 to-violet-400 text-white text-sm font-semibold shadow" whileHover={{ y: -2 }}>
+                Admin Login
+              </motion.button>
+            )}
+
             <motion.button
-              key={it.id}
-              className={`nav-item ${active === it.id ? 'active' : ''}`}
-              onClick={() => handleNav(it.id)}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              aria-current={active === it.id ? 'page' : undefined}
+              onClick={() => setOpen((v) => !v)}
+              aria-label="Toggle navigation"
+              aria-expanded={open}
+              className="ml-1 inline-flex items-center justify-center p-2 rounded-md border border-slate-200 md:hidden"
+              whileTap={{ scale: 0.96 }}
             >
-              {it.label}
-              <span className="underline" aria-hidden />
+              <svg className="w-5 h-5 text-slate-700" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
             </motion.button>
-          ))}
-        </nav>
-
-          <div className="header-actions">
-          <div className="search pill">
-            <input
-              type="search"
-              placeholder="Search products..."
-              value={search}
-              onChange={(e) => onSearchChange(e.target.value)}
-              aria-label="Search products"
-            />
           </div>
-          {isAuthed ? (
-            <>
-              <motion.button className="secondary" onClick={onDashboard} whileHover={{ y: -2 }}>
-                Dashboard
-              </motion.button>
-              <motion.button className="ghost" onClick={onLogout} whileHover={{ y: -2 }}>
-                Logout
-              </motion.button>
-            </>
-          ) : (
-            <motion.button className="primary" onClick={onAdmin} whileHover={{ y: -2 }}>
-              Admin Login
-            </motion.button>
-          )}
-          <motion.button
-            className="icon-btn"
-            onClick={() => setOpen((v) => !v)}
-            aria-label="Toggle navigation"
-            aria-expanded={open}
-            whileTap={{ scale: 0.96 }}
-          >
-            <span className="menu-line" />
-            <span className="menu-line" />
-            <span className="menu-line" />
-          </motion.button>
         </div>
       </div>
 
       <AnimatePresence>
         {open && (
-          <motion.div className="mobile-drawer" initial="hidden" animate="show" exit="exit" variants={drawerVariants}>
-            <div className="drawer-links">
+          <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="md:hidden">
+            <div className="px-4 pb-4 space-y-2">
               {navItems.map((it) => (
-                <motion.button
-                  key={it.id}
-                  className={`nav-item ${active === it.id ? 'active' : ''}`}
-                  onClick={() => handleNav(it.id)}
-                  whileTap={{ scale: 0.98 }}
-                  style={{ display: 'block', width: '100%', textAlign: 'left' }}
-                >
+                <button key={it.id} onClick={() => handleNav(it.id)} className={`w-full text-left px-3 py-2 rounded-md ${active === it.id ? 'bg-violet-50 text-violet-700' : 'hover:bg-slate-100'}`}>
                   {it.label}
-                </motion.button>
+                </button>
               ))}
-              <div style={{ marginTop: 8 }}>
+              <div className="pt-2">
                 {isAuthed ? (
                   <>
-                    <motion.button className="primary" onClick={onDashboard} whileTap={{ scale: 0.98 }} style={{ width: '100%' }}>
-                      Dashboard
-                    </motion.button>
-                    <motion.button className="ghost danger" onClick={onLogout} whileTap={{ scale: 0.98 }} style={{ width: '100%', marginTop: 8 }}>
-                      Logout
-                    </motion.button>
+                    <button onClick={onDashboard} className="w-full px-3 py-2 rounded-md bg-slate-100 mb-2">Dashboard</button>
+                    <button onClick={onLogout} className="w-full px-3 py-2 rounded-md border">Logout</button>
                   </>
                 ) : (
-                  <motion.button className="primary" onClick={onAdmin} whileTap={{ scale: 0.98 }} style={{ width: '100%' }}>
-                    Admin Login
-                  </motion.button>
+                  <button onClick={onAdmin} className="w-full px-3 py-2 rounded-md bg-gradient-to-r from-violet-600 to-violet-400 text-white">Admin Login</button>
                 )}
               </div>
             </div>

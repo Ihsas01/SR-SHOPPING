@@ -4,6 +4,7 @@ import type { Admin, Product, Category } from './data';
 import { defaultAdmins, defaultCategories, defaultProducts } from './data';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Sidebar from './components/Sidebar';
 
 type View = 'landing' | 'adminLogin' | 'adminDashboard';
 
@@ -750,7 +751,12 @@ const App: React.FC = () => {
 
       {view === 'adminDashboard' && currentAdmin && (
         <section className="dashboard">
-          <div className="dashboard-header">
+          <div className="content-width md:flex md:gap-6">
+            <aside className="w-full md:w-72 mb-6 md:mb-0">
+              <Sidebar onNavigate={(id) => { if (id === 'landing') setView('landing'); else if (id === 'adminDashboard') setView('adminDashboard'); else { setView('landing'); setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }), 100); } }} />
+            </aside>
+            <main className="flex-1">
+              <div className="dashboard-header">
             <div>
               <p className="badge">Dashboard</p>
               <h2>Welcome back, {currentAdmin.email}</h2>
@@ -1051,6 +1057,8 @@ const App: React.FC = () => {
                 </div>
               )}
             </div>
+          </div>
+            </main>
           </div>
         </section>
       )}
