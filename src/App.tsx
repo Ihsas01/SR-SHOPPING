@@ -772,38 +772,34 @@ const App: React.FC = () => {
             </div>
           </div>
 
-          <div className="dashboard-stats">
-            <div className="card stat-card">
-              <div className="stat-number">{products.length}</div>
-              <div className="stat-label">Products live</div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+            <div className="p-4 bg-white border rounded-lg shadow-sm">
+              <div className="text-2xl font-bold">{products.length}</div>
+              <div className="text-sm text-slate-500">Products live</div>
             </div>
-            <div className="card stat-card">
-              <div className="stat-number">{formatLKR(totalInventoryValue)}</div>
-              <div className="stat-label">Inventory value</div>
+            <div className="p-4 bg-white border rounded-lg shadow-sm">
+              <div className="text-2xl font-bold">{formatLKR(totalInventoryValue)}</div>
+              <div className="text-sm text-slate-500">Inventory value</div>
             </div>
-            <div className="card stat-card">
-              <div className="stat-number">{admins.length}</div>
-              <div className="stat-label">Admin accounts</div>
+            <div className="p-4 bg-white border rounded-lg shadow-sm">
+              <div className="text-2xl font-bold">{admins.length}</div>
+              <div className="text-sm text-slate-500">Admin accounts</div>
             </div>
           </div>
 
-          <div className="card">
-            <h3>Admin accounts</h3>
-            <div className="table admins">
-              <div className="table-head">
-                <span>Name</span>
-                <span>Email</span>
-                <span>Phone</span>
-                <span />
-              </div>
+          <div className="bg-white border rounded-lg p-4 mb-4">
+            <h3 className="mb-3">Admin accounts</h3>
+            <div className="space-y-3">
               {admins.map((admin) => (
-                <div key={admin.email} className="table-row">
-                  <span className="table-title">{admin.name}</span>
-                  <span className="muted small">{admin.email}</span>
-                  <span className="muted small">{admin.phone ?? '—'}</span>
-                  <div className="table-actions">
+                <div key={admin.email} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-3 border rounded-md">
+                  <div>
+                    <div className="font-semibold">{admin.name}</div>
+                    <div className="text-sm text-slate-500">{admin.email}</div>
+                  </div>
+                  <div className="text-sm text-slate-500">{admin.phone ?? '—'}</div>
+                  <div className="mt-2 sm:mt-0">
                     <button
-                      className="ghost danger"
+                      className="inline-flex items-center px-3 py-1 rounded-md text-sm bg-red-50 text-red-700 border"
                       onClick={() => handleDeleteAdmin(admin.email)}
                       disabled={admins.length <= 1}
                       title={admins.length <= 1 ? 'At least one admin required' : 'Delete admin'}
@@ -814,12 +810,12 @@ const App: React.FC = () => {
                 </div>
               ))}
             </div>
-            <p className="muted small">Email must be unique. Deleting the signed-in admin will log them out.</p>
+            <p className="text-sm text-slate-500 mt-3">Email must be unique. Deleting the signed-in admin will log them out.</p>
           </div>
 
           <div className="card">
             <h3>Add a new product</h3>
-            <form className="form grid-2" onSubmit={handleAddProduct}>
+            <form className="grid grid-cols-1 md:grid-cols-2 gap-4" onSubmit={handleAddProduct}>
               <label>
                 Name
                 <input
@@ -827,6 +823,7 @@ const App: React.FC = () => {
                   value={addForm.name}
                   onChange={(e) => setAddForm((s) => ({ ...s, name: e.target.value }))}
                   placeholder="Product name"
+                  className="w-full border rounded px-3 py-2"
                 />
               </label>
               <label>
@@ -834,6 +831,7 @@ const App: React.FC = () => {
                 <select
                   value={addForm.category}
                   onChange={(e) => setAddForm((s) => ({ ...s, category: e.target.value }))}
+                  className="w-full border rounded px-3 py-2"
                 >
                   {categories.map((cat) => (
                     <option key={cat.name} value={cat.name}>
@@ -844,7 +842,7 @@ const App: React.FC = () => {
                 </select>
               </label>
               {addForm.category === '__new__' && (
-                <div style={{ display: 'contents' }}>
+                <>
                   <label>
                     New category name
                     <input
@@ -852,17 +850,19 @@ const App: React.FC = () => {
                       value={newCategory.name}
                       onChange={(e) => setNewCategory((s) => ({ ...s, name: e.target.value }))}
                       placeholder="Category name"
+                      className="w-full border rounded px-3 py-2"
                     />
                   </label>
-                  <label className="full">
+                  <label className="md:col-span-2">
                     Image URL (optional)
                     <input
                       value={newCategory.image}
                       onChange={(e) => setNewCategory((s) => ({ ...s, image: e.target.value }))}
                       placeholder="https://images.unsplash.com/..."
+                      className="w-full border rounded px-3 py-2"
                     />
                   </label>
-                </div>
+                </>
               )}
               <label>
                 Price (LKR)
@@ -874,6 +874,7 @@ const App: React.FC = () => {
                   value={addForm.price}
                   onChange={(e) => setAddForm((s) => ({ ...s, price: e.target.value }))}
                   placeholder="25.00"
+                  className="w-full border rounded px-3 py-2"
                 />
               </label>
               <label>
@@ -886,14 +887,16 @@ const App: React.FC = () => {
                   value={addForm.quantity}
                   onChange={(e) => setAddForm((s) => ({ ...s, quantity: e.target.value }))}
                   placeholder="10"
+                  className="w-full border rounded px-3 py-2"
                 />
               </label>
-              <label className="full">
+              <label className="md:col-span-2">
                 Image URL
                 <input
                   value={addForm.image}
                   onChange={(e) => setAddForm((s) => ({ ...s, image: e.target.value }))}
                   placeholder="https://images.unsplash.com/..."
+                  className="w-full border rounded px-3 py-2"
                 />
               </label>
               <div className="full">
@@ -931,18 +934,19 @@ const App: React.FC = () => {
                     </div>
                     {open && (
                       <div style={{ marginTop: 12 }}>
-                        {items.length === 0 && <div className="muted">No items in this category.</div>}
+                        {items.length === 0 && <div className="text-sm text-slate-500">No items in this category.</div>}
                         {items.map((product) => (
-                          <div key={product.id} className="table-row" style={{ alignItems: 'center', display: 'flex', gap: 12 }}>
-                            <div className="table-product" style={{ display: 'flex', gap: 12, alignItems: 'center', flex: 1 }}>
-                              <img src={product.image} alt={product.name} style={{ width: 64, height: 64, objectFit: 'cover' }} />
+                          <div key={product.id} className="flex flex-col md:flex-row md:items-center gap-3 p-3 border rounded-md">
+                            <div className="flex items-center gap-3 flex-1">
+                              <img src={product.image} alt={product.name} className="w-16 h-16 object-cover rounded" />
                               <div>
-                                <div className="table-title">{product.name}</div>
-                                <div className="muted small">In stock: {product.quantity}</div>
+                                <div className="font-medium">{product.name}</div>
+                                <div className="text-sm text-slate-500">In stock: {product.quantity}</div>
                               </div>
                             </div>
-                            <div style={{ width: 120 }}>
+                            <div className="w-full md:w-32">
                               <input
+                                className="w-full border rounded px-2 py-1"
                                 type="number"
                                 min={0}
                                 step={0.01}
@@ -955,8 +959,9 @@ const App: React.FC = () => {
                                 }
                               />
                             </div>
-                            <div style={{ width: 100 }}>
+                            <div className="w-full md:w-24">
                               <input
+                                className="w-full border rounded px-2 py-1"
                                 type="number"
                                 min={0}
                                 step={1}
@@ -969,17 +974,17 @@ const App: React.FC = () => {
                                 }
                               />
                             </div>
-                            <div className="table-actions" style={{ display: 'flex', gap: 8 }}>
-                              <button className="secondary" onClick={() => handleUpdateProduct(product.id)}>
+                            <div className="flex gap-2">
+                              <button className="px-3 py-1 rounded bg-slate-100" onClick={() => handleUpdateProduct(product.id)}>
                                 Save
                               </button>
-                              <button className="ghost" onClick={() => openEditProduct(product)}>
+                              <button className="px-3 py-1 rounded border" onClick={() => openEditProduct(product)}>
                                 Edit
                               </button>
-                              <button className="ghost" onClick={() => handleSetDiscount(product.id)}>
+                              <button className="px-3 py-1 rounded border" onClick={() => handleSetDiscount(product.id)}>
                                 Discount
                               </button>
-                              <button className="ghost danger" onClick={() => handleDeleteProduct(product.id)}>
+                              <button className="px-3 py-1 rounded bg-red-50 text-red-700" onClick={() => handleDeleteProduct(product.id)}>
                                 Delete
                               </button>
                             </div>
