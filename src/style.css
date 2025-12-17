@@ -399,6 +399,71 @@ textarea:focus-visible {
 .footer-list { display: flex; flex-direction: column; gap: 8px; }
 .footer-link { color: inherit; text-decoration: none; }
 
+/* Responsive adjustments for tablets and phones */
+
+/* Utility responsive containers */
+.table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.chart-container { width: 100%; max-width: 100%; height: 320px; }
+.chart-container canvas { width: 100% !important; height: 100% !important; display: block; }
+
+/* Forms */
+.form { display: block; }
+.form.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.form .full { grid-column: 1 / -1; }
+.form label { display: flex; flex-direction: column; gap: 8px; }
+
+/* Generic card grid (used across dashboard) */
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.card { width: 100%; }
+
+/* Table-like blocks used inside dashboard */
+.table { width: 100%; }
+.table .table-head { display: grid; grid-template-columns: 1fr 1fr 1fr 100px; gap: 12px; padding: 12px 0; font-weight: 700; }
+.table .table-row { display: grid; grid-template-columns: 1fr 1fr 1fr 100px; gap: 12px; align-items: center; padding: 12px 0; border-top: 1px solid rgba(226,232,240,0.6); }
+.table .table-title { font-weight: 700; }
+.table .table-actions { justify-self: end; }
+
+/* Header adjustments for smaller screens */
+.icon-btn { display: none; }
+.nav-links.mobile { display: none; }
+
+@media (max-width: 1024px) {
+  .hero-shell { grid-template-columns: 1fr; }
+  .cards { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .content-width { padding-left: 16px; padding-right: 16px; }
+  .nav-links.desktop { display: none; }
+  .nav-links.mobile { display: flex; }
+  .icon-btn { display: flex; align-items: center; justify-content: center; }
+  .search.pill { display: none; }
+  .brand-title { font-size: 14px; }
+  .brand-subtitle { display: none; }
+  .hero { padding: 18px 0; }
+  .hero-shell { gap: 18px; }
+  .hero-stats { grid-template-columns: repeat(2, 1fr); }
+  .cards { grid-template-columns: 1fr; }
+  .dashboard-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .form.grid-2 { grid-template-columns: 1fr; }
+  .table .table-head { display: none; }
+  .table .table-row { grid-template-columns: 1fr; gap: 6px; padding: 10px 0; }
+  .table .table-row span { display: block; }
+  .table .table-actions { justify-self: start; }
+}
+
+@media (max-width: 480px) {
+  .hero-content h1 { font-size: clamp(20px, 6vw, 28px); }
+  .brand-logo { width: 36px; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-inner { padding: 12px 0; }
+  .footer-bottom { text-align: center; margin-top: 12px; }
+  .chart-container { height: 220px; }
+  .search.pill input { min-width: 0; }
+  .table .table-row { padding: 10px 8px; }
+  button { padding: 10px 12px; }
+}
+
 /* Responsive adjustments */
 /* Prevent horizontal overflow */
 html, body { overflow-x: hidden; }
