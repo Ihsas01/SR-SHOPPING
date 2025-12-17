@@ -14,6 +14,7 @@ const STORAGE_KEYS = {
   session: 'sr-shopping-session',
   categories: 'sr-shopping-categories',
   discounts: 'sr-shopping-discounts',
+  pendingAdmins: 'sr-shopping-pending-admins',
 };
 
 const WHATSAPP_NUMBER = '0763913526';
@@ -63,6 +64,7 @@ const App: React.FC = () => {
     loadFromStorage<Product[]>(STORAGE_KEYS.products, defaultProducts),
   );
   const [admins, setAdmins] = useState<Admin[]>(() => loadFromStorage<Admin[]>(STORAGE_KEYS.admins, defaultAdmins));
+  const [pendingAdmins, setPendingAdmins] = useState<Admin[]>(() => loadFromStorage<Admin[]>(STORAGE_KEYS.pendingAdmins, []));
   const [currentAdmin, setCurrentAdmin] = useState<Admin | null>(() =>
     loadFromStorage<Admin | null>(STORAGE_KEYS.session, null),
   );
@@ -111,6 +113,10 @@ const App: React.FC = () => {
   useEffect(() => {
     persistToStorage(STORAGE_KEYS.admins, admins);
   }, [admins]);
+
+  useEffect(() => {
+    persistToStorage(STORAGE_KEYS.pendingAdmins, pendingAdmins);
+  }, [pendingAdmins]);
 
   useEffect(() => {
     persistToStorage(STORAGE_KEYS.session, currentAdmin);
@@ -310,19 +316,41 @@ const App: React.FC = () => {
       setAuthMessage('That email is already registered.');
       return;
     }
+    if (pendingAdmins.some((a) => a.email.toLowerCase() === email)) {
+      setAuthMessage('That email is already pending approval.');
+      return;
+    }
     const newAdmin: Admin = {
       name: registerForm.name.trim(),
       email,
       password: registerForm.password.trim(),
       phone: registerForm.phone.trim(),
     };
-    const nextAdmins = [newAdmin, ...admins].slice(0, 3);
-    setAdmins(nextAdmins);
-    setCurrentAdmin(newAdmin);
-    setView('adminDashboard');
-    setAuthMessage('Registration successful. You are logged in.');
+    // If no admins exist (first registration), approve immediately and log in.
+    if (!admins || admins.length === 0) {
+      const nextAdmins = [newAdmin, ...admins];
+      setAdmins(nextAdmins);
+      setCurrentAdmin(newAdmin);
+      setView('adminDashboard');
+      setAuthMessage('Registration successful. You are logged in.');
+    } else {
+      // subsequent registrations require approval by an existing admin
+      setPendingAdmins((prev) => [newAdmin, ...prev]);
+      setAuthMessage('Registration submitted. Awaiting admin approval before you can log in.');
+    }
     setRegisterForm({ name: '', email: '', password: '', phone: '' });
     setShowRegister(false);
+  };
+
+  const approvePendingAdmin = (email: string) => {
+    const admin = pendingAdmins.find((p) => p.email === email);
+    if (!admin) return;
+    setPendingAdmins((prev) => prev.filter((p) => p.email !== email));
+    setAdmins((prev) => [admin, ...prev]);
+  };
+
+  const rejectPendingAdmin = (email: string) => {
+    setPendingAdmins((prev) => prev.filter((p) => p.email !== email));
   };
 
   const handleLogout = () => {
