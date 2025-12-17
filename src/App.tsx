@@ -501,13 +501,13 @@ const App: React.FC = () => {
 
               <div style={{ marginTop: 12 }}>
                 <h3>Discounted items</h3>
-                <div className="grid products">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                   {visibleProducts.filter((p) => discounts[p.id]).map((p) => {
                     const percent = discounts[p.id] ?? 0;
                     const discounted = p.price * (1 - percent / 100);
                     return (
                       <motion.article key={p.id} className="card product-card fade" variants={fadeInUp} whileHover={{ y: -4, scale: 1.01 }}>
-                        <img src={p.image} alt={p.name} loading="lazy" />
+                        <img src={p.image} alt={p.name} loading="lazy" className="w-full h-44 object-cover rounded-t-md" />
                         <div className="product-body">
                           <div className="product-top">
                             <h3>{p.name}</h3>
@@ -530,10 +530,10 @@ const App: React.FC = () => {
                 </div>
 
                 <h3 style={{ marginTop: 18 }}>Other products</h3>
-                <div className="grid products">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                   {visibleProducts.filter((p) => !discounts[p.id]).map((p) => (
                     <motion.article key={p.id} className="card product-card fade" variants={fadeInUp} whileHover={{ y: -4, scale: 1.01 }}>
-                      <img src={p.image} alt={p.name} loading="lazy" />
+                      <img src={p.image} alt={p.name} loading="lazy" className="w-full h-44 object-cover rounded-t-md" />
                       <div className="product-body">
                         <div className="product-top">
                           <h3>{p.name}</h3>
@@ -612,7 +612,7 @@ const App: React.FC = () => {
                   </button>
                 </div>
               </div>
-              <div className="grid categories">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {categories.map((cat) => (
                   <motion.article
                     key={cat.name}
@@ -624,7 +624,7 @@ const App: React.FC = () => {
                     tabIndex={0}
                     onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { setFilterCategory(cat.name); setCategoryModal(cat.name); } }}
                   >
-                    <img src={cat.image} alt={cat.name} loading="lazy" />
+                    <img src={cat.image} alt={cat.name} loading="lazy" className="w-full h-36 object-cover rounded-t-md" />
                     <div>
                       <h3>{cat.name}</h3>
                       <p className="muted">{cat.description}</p>
@@ -1214,9 +1214,9 @@ const App: React.FC = () => {
             </div>
             <p className="muted">Items in this category</p>
             <div className="grid" style={{ marginTop: 12 }}>
-              {products.filter((p) => p.category === categoryModal).map((p) => (
-                <div key={p.id} className="card product-card" style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-                  <img src={p.image} alt={p.name} style={{ width: 80, height: 80, objectFit: 'cover' }} />
+                {products.filter((p) => p.category === categoryModal).map((p) => (
+                <div key={p.id} className="card product-card flex items-center gap-3">
+                  <img src={p.image} alt={p.name} className="w-20 h-20 object-cover rounded" />
                   <div style={{ flex: 1 }}>
                     <div className="table-title">{p.name}</div>
                     <div className="muted small">{formatLKR(p.price)} • In stock: {p.quantity}</div>
