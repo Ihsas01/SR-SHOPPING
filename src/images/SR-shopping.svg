@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="40" viewBox="0 0 300 100" aria-labelledby="title">
+  <title>SR Shopping Logo</title>
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0" stop-color="#00aaff"/>
+      <stop offset="1" stop-color="#0066cc"/>
+    </linearGradient>
+  </defs>
+  <rect width="300" height="100" rx="12" fill="transparent"/>
+  <g transform="translate(10,10)">
+    <rect x="0" y="0" width="80" height="80" rx="12" fill="url(#g)" />
+    <text x="40" y="50" font-family="Helvetica, Arial, sans-serif" font-size="44" fill="#fff" font-weight="700" text-anchor="middle">SR</text>
+  </g>
+  <text x="110" y="60" font-family="Helvetica, Arial, sans-serif" font-size="36" fill="#222" font-weight="700">SHOPPING</text>
+</svg>

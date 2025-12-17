@@ -1,0 +1,14 @@
+# Enforce LF line endings for text files
+* text=auto eol=lf
+
+# Treat common binary files as binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.zip binary
+*.gz binary
+
+# Node modules should not be normalized
+node_modules/* -text
